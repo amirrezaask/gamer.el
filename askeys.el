@@ -1,4 +1,4 @@
-;;; askkeys.el --- modal-framework for creating various modes  -*- lexical-binding: t; -*-
+;;; askeys.el --- modal-framework for creating various modes  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2020  Amirreza Askarpour
 
@@ -23,8 +23,9 @@
 
 ;;; Code:
 
-(define-minor-mode askkeys-mode "Modal framework minor mode"
-           :keymap (let ((map (make-sparse-keymap)))
-            map))
+(defun askeys-command-mode-enable ())
+
+
+(define-minor-mode askeys-mode "amirreza modal keybindings for emacs")
 (provide 'modal-framework)
 ;;; modal-framework.el ends here
