@@ -22,10 +22,30 @@
 ;; 
 
 ;;; Code:
+(defvar askeys/keymap (make-sparse-keymap) "Main askeys-mode keymap.")
 
-(defun askeys-command-mode-enable ())
+(defun askeys/--register-keys (keychords) "Register given keychords to askeys main keymap.  KEYCHORDS are a tuple of kbds and functions."
+       (mapcar (lambda (keyfn)
+		 (let ((k (car keyfn)) (fn (cdr keyfn)))
+		   (define-key askeys/keymap (kbd k) fn)
+		   ))
+	       keychords))
+(defun askeys/--unregister-keys (keychords) "Unregister given keychords from askeys main keymap.  KEYCHORDS are a list of kbds."
+       (mapcar (lambda (key)
+		 (unbind-key key askeys/keymap)
+		 )
+	       keychords)
+       )
 
+(defun askeys/edit-mode-enable () "Enable askeys edit mode.")
 
-(define-minor-mode askeys-mode "amirreza modal keybindings for emacs")
+(defun askeys/command-mode-enable () "Enable askeys command mode.")
+
+(defun askeys/insert-mode-enable () "Enable askeys insert mode.")
+
+(defun askeys/review-mode-enable () "Enable askeys review mpde."
+       (askeys/--register-keys '(("i" 'previous-line))))
+
+(define-minor-mode askeys-mode "amirreza modal keybindings for emacs" (askeys/command-mode-enable))
 (provide 'modal-framework)
 ;;; modal-framework.el ends here
