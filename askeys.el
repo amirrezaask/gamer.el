@@ -64,17 +64,22 @@ Basic movement defined in askeys/basic-movement-keys
 
 
 (defvar askeys/insert-mode-keys '(
-				  '("C-c C-n" . 'askeys/command-mode-enable)
-				  ) "Default Emacs Behaviour plus triggers for various modes.")
+				   ("C-c C-c"  (lambda () (interactive) (askeys/command-mode-enable)))))
 
-(defvar askeys/command-mode-keys '(("g" (lambda () (interactive) (magit-status)))))
+(defvar askeys/command-mode-keys '(
+				   ("g"  (lambda () (interactive) (magit-status)))
+				   ("i"  (lambda () (interactive) (askeys/insert-mode-enable)))))
+				  
+
 (defun askeys/review-mode-enable () "Enable askeys review mode."
        (askeys/--register-keys askeys/review-mode-keys))
 
 (defun askeys/command-mode-enable () "Enable askeys command mode."
        (interactive)
        (askeys/--register-keys askeys/command-mode-keys))
+
 (defun askeys/insert-mode-enable () "Enable askeys insert mode."
+       (interactive)
        (askeys/--register-keys askeys/insert-mode-keys))
 
 
@@ -83,7 +88,14 @@ Basic movement defined in askeys/basic-movement-keys
   (askeys-mode t)
   (askeys/command-mode-enable))
 
-(define-minor-mode askeys-mode "amirreza modal keybindings for emacs")
+(defun askeys/turn-off ()
+  (askeys-mode nil)
+  )
+
+
+(define-minor-mode askeys-mode "amirreza modal keybindings for Emacs")
+
 (global-set-key (kbd "M-SPC") 'askeys/turn-on)
+
 (provide 'askeys)
 ;;; askeys.el ends here
