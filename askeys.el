@@ -97,5 +97,5 @@ Basic movement defined in askeys/basic-movement-keys
 
 (global-set-key (kbd "M-SPC") 'askeys/turn-on)
 
-(provide 'askeys)
+(provide 'askeys.el)
 ;;; askeys.el ends here
