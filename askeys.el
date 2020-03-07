@@ -22,7 +22,7 @@
 ;; 
 
 ;;; Code:
-
+(defvar askeys/current-mode "command" "Current mode of askeys.")
 (defun askeys/--command-mode-is-enabled-callback ()
   "Show simple note that user is in command mode."
   (interactive)
@@ -42,6 +42,16 @@ With argument, do this that many times."
   (interactive)
   (delete-word (- arg)))
 
+(defun remove-from-mode-line ()
+  "Update modeline."
+  (delete askeys/current-mode mode-line-misc-info)
+  (force-mode-line-update))
+
+(defun add-to-mode-line ()
+  "Add to modeline."
+  (add-to-list 'mode-line-misc-info askeys/current-mode)
+  (force-mode-line-update))
+
 (defvar askeys-mode-map (make-sparse-keymap) "Main askeys-mode keymap.")
 
 (defun askeys/--newline-and-comment () "Add a new line to the first of the line and comments that line."
@@ -50,6 +60,9 @@ With argument, do this that many times."
 (defun askeys/command-mode-enable ()
   "Add command mode keys to askeys mode map."
   (interactive)
+  (remove-from-mode-line)
+  (setq askeys/current-mode "command")
+  (add-to-mode-line)
   (define-key askeys-mode-map (kbd "~")  'askeys/--command-mode-is-enabled-callback)
   (define-key askeys-mode-map (kbd "!")  'askeys/--command-mode-is-enabled-callback)
   (define-key askeys-mode-map (kbd "@")  'askeys/--command-mode-is-enabled-callback)
@@ -121,6 +134,9 @@ With argument, do this that many times."
  (defun askeys/insert-mode-enable ()
   "Add insert mode keys (basically Emacs) but with a way to get to command mode."
   (interactive)
+  (remove-from-mode-line)
+  (setq askeys/current-mode "insert")
+  (add-to-mode-line)
   (message "insert mode enabled")
   (define-key askeys-mode-map (kbd "~")  nil)
   (define-key askeys-mode-map (kbd "!")  nil)
