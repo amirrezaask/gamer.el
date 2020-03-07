@@ -39,7 +39,7 @@ With argument, do this that many times."
 (defun delete-word-backward (arg)
   "Delete characters backward until encountering the end of a word.
 With argument, do this that many times."
-  (interactive "p")
+  (interactive)
   (delete-word (- arg)))
 
 (defvar askeys-mode-map (make-sparse-keymap) "Main askeys-mode keymap.")
@@ -99,13 +99,13 @@ With argument, do this that many times."
   (define-key askeys-mode-map (kbd "u")  'backward-word)
   (define-key askeys-mode-map (kbd "v")  'askeys/--command-mode-is-enabled-callback)
   (define-key askeys-mode-map (kbd "w")  'askeys/--command-mode-is-enabled-callback)
-  (define-key askeys-mode-map (kbd "x")  'delete-char)
+  (define-key askeys-mode-map (kbd "x")  'backward-delete-char-untabify)
   (define-key askeys-mode-map (kbd "y")  'backward-sexp)
   (define-key askeys-mode-map (kbd "z")  'undo)
   (define-key askeys-mode-map (kbd "<")  'askeys/--command-mode-is-enabled-callback)
   (define-key askeys-mode-map (kbd ">")  'askeys/--command-mode-is-enabled-callback)
   (define-key askeys-mode-map (kbd ",")  'askeys/--command-mode-is-enabled-callback)
-  (define-key askeys-mode-map (kbd ".")  'askeys/--command-mode-is-enabled-callback)
+  (define-key askeys-mode-map (kbd ".")  'xref-find-definitions)
   (define-key askeys-mode-map (kbd "/")  'askeys/--command-mode-is-enabled-callback)
   (define-key askeys-mode-map (kbd "\\")  'askeys/--command-mode-is-enabled-callback)
   (define-key askeys-mode-map (kbd "{")  'askeys/--command-mode-is-enabled-callback)
@@ -117,8 +117,8 @@ With argument, do this that many times."
   (define-key askeys-mode-map (kbd ";")  'comment-line)
   (define-key askeys-mode-map (kbd "SPC") 'askeys/insert-mode-enable)
   (message "command mode enabled"))
-
-(defun askeys/insert-mode-enable ()
+;; (mode-line-misc-info)
+ (defun askeys/insert-mode-enable ()
   "Add insert mode keys (basically Emacs) but with a way to get to command mode."
   (interactive)
   (message "insert mode enabled")
@@ -186,6 +186,7 @@ With argument, do this that many times."
   (define-key askeys-mode-map (kbd "]")  nil)
   (define-key askeys-mode-map (kbd "'")  nil)
   (define-key askeys-mode-map (kbd "\"")  nil)
+  (define-key askeys-mode-map (kbd ";")  nil)
   (define-key askeys-mode-map (kbd "SPC") nil)
   (define-key askeys-mode-map (kbd "M-SPC") 'askeys/command-mode-enable))
 
