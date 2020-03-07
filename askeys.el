@@ -23,77 +23,49 @@
 
 ;;; Code:
 (defvar askeys-mode-map (make-sparse-keymap) "Main askeys-mode keymap.")
-(defvar askeys/basic-movement-keys '(("i"  'previous-line)
-				     ("l"  'right-char)
-				     ("j"  'left-char)
-				     ("k"  'next-line)) "Askeys basic movement which is used in all modes except insert.")
-
-(defun askeys/--register-keys (keychords) "Register given keychords to askeys main keymap.  KEYCHORDS are a tuple of kbds and functions."
-       (mapcar (lambda (keyfn)
-		 (message ">>> %s" keyfn)
-		 (let ((k (car keyfn)) (fn (car (cdr keyfn))))
-		   (message "KEY => %s fn=> %s" k fn)
-		   (define-key askeys-mode-map (kbd k) fn)))
-	       keychords))
-
-(defun askeys/--unregister-keys (keychords) "Unregister given keychords from askeys main keymap.  KEYCHORDS are a tuple of kbds and functions."
-       (mapcar (lambda (keyfn)
-		 (unbind-key (car keyfn) askeys-mode-map)
-		 )
-	       keychords) )
-
-(defun askeys/edit-mode-enable () "Enable askeys edit mode.")
-
-
-(defun askeys/with-basic-movement (keys)
-  "Add askeys basic movement to given keys.  KEYS are simple askeys keychords."
-  (mapcar (lambda (key)
-	    (message "%s" key)
-	    (add-to-list 'keys key)
-	   ) askeys/basic-movement-keys))
 
 (defun askeys/--newline-and-comment () "Add a new line to the first of the line and comments that line."
        (call-interactively 'move-beginning-of-line) (insert "\n") (forward-line -1) (call-interactively 'comment-line))
 
-(defvar askeys/review-mode-keys (askeys/with-basic-movement '(("c"  'askeys/command-mode-enable)
-							      (";"  'askeys/--newline-and-comment)))
-  "Designed for code review scenarios.
-Basic movement defined in askeys/basic-movement-keys
-  a => insert new line at first of the line (so basically upper line)
-  c => comment current line")
+(defun askeys/basic-movement ()
+  "Add basic movement to askyes map."
+  (define-key askeys-mode-map (kbd "i")  'previous-line)
+  (define-key askeys-mode-map (kbd "l")  'right-char)
+  (define-key askeys-mode-map (kbd "j")  'left-char)
+  (define-key askeys-mode-map (kbd "k")  'next-line))
 
 
-(defvar askeys/insert-mode-keys '(
-				   ("C-c C-c"  (lambda () (interactive) (askeys/command-mode-enable)))))
+(defun askeys/command-mode-enable ()
+  "Add command mode keys to askeys mode map."
+  (interactive)
+  (message "command mode enabled")
+  (setq askeys-mode-map (make-sparse-keymap))
+  (askeys/basic-movement)
+  (define-key askeys-mode-map (kbd "g") 'magit-status)
+  (define-key askeys-mode-map (kbd "u") 'askeys-insert-mode-enable))
 
-(defvar askeys/command-mode-keys '(
-				   ("g"  (lambda () (interactive) (magit-status)))
-				   ("i"  (lambda () (interactive) (askeys/insert-mode-enable)))))
-				  
-
-(defun askeys/review-mode-enable () "Enable askeys review mode."
-       (askeys/--register-keys askeys/review-mode-keys))
-
-(defun askeys/command-mode-enable () "Enable askeys command mode."
-       (interactive)
-       (askeys/--register-keys askeys/command-mode-keys))
-
-(defun askeys/insert-mode-enable () "Enable askeys insert mode."
-       (interactive)
-       (askeys/--register-keys askeys/insert-mode-keys))
-
+(defun askeys/insert-mode-enable ()
+  "Add insert mode keys (basically Emacs) but with a way to get to command mode."
+  (interactive)
+  (message "insert mode enabled")
+  (setq askeys-mode-map (make-sparse-keymap))
+  (define-key askeys-mode-map (kbd "C-c C-c") 'askeys/command-mode-enable))
 
 (defun askeys/turn-on ()
+  "Turn on askeys."
   (interactive)
   (askeys-mode t)
-  (askeys/command-mode-enable))
-
-(defun askeys/turn-off ()
-  (askeys-mode nil)
+  (askeys/command-mode-enable)
   )
 
+(defun askeys/turn-off ()
+  "Turn off askeys."
+  (interactive)
+  (setq askeys-mode-map (make-sparse-keymap))
+  (askeys-mode nil))
 
-(define-minor-mode askeys-mode "amirreza modal keybindings for Emacs")
+
+(define-minor-mode askeys-mode "amirrezaask modal keybindings for Emacs")
 
 (global-set-key (kbd "M-SPC") 'askeys/turn-on)
 
