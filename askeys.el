@@ -28,6 +28,20 @@
   (interactive)
   (message "You are in command mode"))
 
+(defun delete-word (arg)
+  "Delete characters forward until encountering the end of a word.
+With argument, do this that many times."
+  (interactive "p")
+  (if (use-region-p)
+      (delete-region (region-beginning) (region-end))
+    (delete-region (point) (progn (forward-word arg) (point)))))
+
+(defun delete-word-backward (arg)
+  "Delete characters backward until encountering the end of a word.
+With argument, do this that many times."
+  (interactive "p")
+  (delete-word (- arg)))
+
 (defvar askeys-mode-map (make-sparse-keymap) "Main askeys-mode keymap.")
 
 (defun askeys/--newline-and-comment () "Add a new line to the first of the line and comments that line."
@@ -63,9 +77,9 @@
   (define-key askeys-mode-map (kbd "-")  'askeys/--command-mode-is-enabled-callback)
   (define-key askeys-mode-map (kbd "=")  'askeys/--command-mode-is-enabled-callback)
   (define-key askeys-mode-map (kbd "a")  'askeys/--command-mode-is-enabled-callback)
-  (define-key askeys-mode-map (kbd "b")  'askeys/--command-mode-is-enabled-callback)
-  (define-key askeys-mode-map (kbd "c")  'askeys/--command-mode-is-enabled-callback)
-  (define-key askeys-mode-map (kbd "d")  'askeys/--command-mode-is-enabled-callback)
+  (define-key askeys-mode-map (kbd "b")  'kill-region)
+  (define-key askeys-mode-map (kbd "c")  'delete-forward-char)
+  (define-key askeys-mode-map (kbd "d")  'kill-word)
   (define-key askeys-mode-map (kbd "e")  'askeys/--command-mode-is-enabled-callback)
   (define-key askeys-mode-map (kbd "f")  'askeys/--command-mode-is-enabled-callback)
   (define-key askeys-mode-map (kbd "g")  'magit-status)
@@ -74,20 +88,20 @@
   (define-key askeys-mode-map (kbd "j")  'left-char)
   (define-key askeys-mode-map (kbd "k")  'next-line)
   (define-key askeys-mode-map (kbd "l")  'right-char)
-  (define-key askeys-mode-map (kbd "m")  'askeys/--command-mode-is-enabled-callback)
-  (define-key askeys-mode-map (kbd "n")  'askeys/--command-mode-is-enabled-callback)
-  (define-key askeys-mode-map (kbd "o")  'askeys/--command-mode-is-enabled-callback)
-  (define-key askeys-mode-map (kbd "p")  'askeys/--command-mode-is-enabled-callback)
+  (define-key askeys-mode-map (kbd "m")  'kill-ring-save)
+  (define-key askeys-mode-map (kbd "n")  'yank)
+  (define-key askeys-mode-map (kbd "o")  'forward-word)
+  (define-key askeys-mode-map (kbd "p")  'forward-sexp)
   (define-key askeys-mode-map (kbd "q")  'askeys/--command-mode-is-enabled-callback)
   (define-key askeys-mode-map (kbd "r")  'askeys/--command-mode-is-enabled-callback)
-  (define-key askeys-mode-map (kbd "s")  'askeys/--command-mode-is-enabled-callback)
+  (define-key askeys-mode-map (kbd "s")  'delete-word-backward)
   (define-key askeys-mode-map (kbd "t")  'toggle-color-mode)
-  (define-key askeys-mode-map (kbd "u")  'askeys/--command-mode-is-enabled-callback)
+  (define-key askeys-mode-map (kbd "u")  'backward-word)
   (define-key askeys-mode-map (kbd "v")  'askeys/--command-mode-is-enabled-callback)
   (define-key askeys-mode-map (kbd "w")  'askeys/--command-mode-is-enabled-callback)
-  (define-key askeys-mode-map (kbd "x")  'askeys/--command-mode-is-enabled-callback)
-  (define-key askeys-mode-map (kbd "y")  'askeys/--command-mode-is-enabled-callback)
-  (define-key askeys-mode-map (kbd "z")  'askeys/--command-mode-is-enabled-callback)
+  (define-key askeys-mode-map (kbd "x")  'delete-char)
+  (define-key askeys-mode-map (kbd "y")  'backward-sexp)
+  (define-key askeys-mode-map (kbd "z")  'undo)
   (define-key askeys-mode-map (kbd "<")  'askeys/--command-mode-is-enabled-callback)
   (define-key askeys-mode-map (kbd ">")  'askeys/--command-mode-is-enabled-callback)
   (define-key askeys-mode-map (kbd ",")  'askeys/--command-mode-is-enabled-callback)
@@ -100,6 +114,7 @@
   (define-key askeys-mode-map (kbd "]")  'askeys/--command-mode-is-enabled-callback)
   (define-key askeys-mode-map (kbd "'")  'askeys/--command-mode-is-enabled-callback)
   (define-key askeys-mode-map (kbd "\"")  'askeys/--command-mode-is-enabled-callback)
+  (define-key askeys-mode-map (kbd ";")  'comment-line)
   (define-key askeys-mode-map (kbd "SPC") 'askeys/insert-mode-enable)
   (message "command mode enabled"))
 
