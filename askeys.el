@@ -100,15 +100,14 @@
   (define-key askeys-mode-map (kbd "]")  nil)
   (define-key askeys-mode-map (kbd "'")  nil)
   (define-key askeys-mode-map (kbd "\"")  nil)
-  (message "command mode enabled")
-  
-  )
+  (define-key askeys-mode-map (kbd "SPC") 'askeys/insert-mode-enable)
+  (message "command mode enabled"))
 
 (defun askeys/insert-mode-enable ()
   "Add insert mode keys (basically Emacs) but with a way to get to command mode."
   (interactive)
   (message "insert mode enabled")
-  (define-key askeys-mode-map (kdb "~")  nil)
+  (define-key askeys-mode-map (kbd "~")  nil)
   (define-key askeys-mode-map (kbd "!")  nil)
   (define-key askeys-mode-map (kbd "@")  nil)
   (define-key askeys-mode-map (kbd "#")  nil)
@@ -172,7 +171,8 @@
   (define-key askeys-mode-map (kbd "]")  nil)
   (define-key askeys-mode-map (kbd "'")  nil)
   (define-key askeys-mode-map (kbd "\"")  nil)
-  (define-key askeys-mode-map (kbd "C-c C-c") 'askeys/command-mode-enable))
+  (define-key askeys-mode-map (kbd "SPC") nil)
+  (define-key askeys-mode-map (kbd "M-SPC") 'askeys/command-mode-enable))
 
 (defun askeys/turn-on ()
   "Turn on askeys."
@@ -190,7 +190,7 @@
 
 (define-minor-mode askeys-mode "amirrezaask modal keybindings for Emacs")
 
-(global-set-key (kbd "M-SPC") 'askeys/turn-on)
+(global-set-key (kbd "C-c C-a") 'askeys/turn-on)
 
 (provide 'askeys.el)
 ;;; askeys.el ends here
