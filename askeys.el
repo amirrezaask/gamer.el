@@ -89,7 +89,7 @@ With argument, do this that many times."
   (define-key askeys-mode-map (kbd "0")  'askeys/--command-mode-is-enabled-callback)
   (define-key askeys-mode-map (kbd "-")  'askeys/--command-mode-is-enabled-callback)
   (define-key askeys-mode-map (kbd "=")  'askeys/--command-mode-is-enabled-callback)
-  (define-key askeys-mode-map (kbd "a")  'helm-M-x)
+  (define-key askeys-mode-map (kbd "a")  'counsel-M-x)
   (define-key askeys-mode-map (kbd "b")  'kill-region)
   (define-key askeys-mode-map (kbd "c")  'delete-forward-char)
   (define-key askeys-mode-map (kbd "d")  'kill-word)
@@ -110,7 +110,7 @@ With argument, do this that many times."
   (define-key askeys-mode-map (kbd "s")  'delete-word-backward)
   (define-key askeys-mode-map (kbd "t")  'toggle-color-mode)
   (define-key askeys-mode-map (kbd "u")  'backward-word)
-  (define-key askeys-mode-map (kbd "v")  'askeys/--command-mode-is-enabled-callback)
+  (define-key askeys-mode-map (kbd "v")  'query-replace)
   (define-key askeys-mode-map (kbd "w")  'askeys/--command-mode-is-enabled-callback)
   (define-key askeys-mode-map (kbd "x")  'backward-delete-char-untabify)
   (define-key askeys-mode-map (kbd "y")  'backward-sexp)
@@ -123,8 +123,8 @@ With argument, do this that many times."
   (define-key askeys-mode-map (kbd "\\")  'askeys/--command-mode-is-enabled-callback)
   (define-key askeys-mode-map (kbd "{")  'askeys/--command-mode-is-enabled-callback)
   (define-key askeys-mode-map (kbd "}")  'askeys/--command-mode-is-enabled-callback)
-  (define-key askeys-mode-map (kbd "[")  'askeys/--command-mode-is-enabled-callback)
-  (define-key askeys-mode-map (kbd "]")  'askeys/--command-mode-is-enabled-callback)
+  (define-key askeys-mode-map (kbd "[")  'scroll-up-command)
+  (define-key askeys-mode-map (kbd "]")  'scroll-down-command)
   (define-key askeys-mode-map (kbd "'")  'askeys/--command-mode-is-enabled-callback)
   (define-key askeys-mode-map (kbd "\"")  'askeys/--command-mode-is-enabled-callback)
   (define-key askeys-mode-map (kbd ";")  'comment-line)
@@ -222,7 +222,7 @@ With argument, do this that many times."
 
 (define-minor-mode askeys-mode "amirrezaask modal keybindings for Emacs")
 
-(global-set-key (kbd "C-c C-a") 'askeys/turn-on)
+(global-set-key (kbd "C-x a k ") 'askeys/turn-on)
 
 (provide 'askeys.el)
 ;;; askeys.el ends here
