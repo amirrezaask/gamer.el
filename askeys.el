@@ -79,6 +79,8 @@ With argument, do this that many times."
 	(define-key map (kbd "C-o") 'other-window)
 	(define-key map (kbd "M-'") 'split-window-right)
 	(define-key map (kbd "M-=") 'split-window-below)
+        (define-key map (kbd "M-k") 'delete-window)
+	(define-key map (kbd "M-m") 'delete-other-windows)
 	map)
      "Amirreza Keybindings.")
 (defun askeys/turn-on ()

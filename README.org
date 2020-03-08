@@ -42,3 +42,5 @@ Ctrl and all actions happens with Meta (Alt) key.
 | M-u      | undo                  |
 | M-'      | split-window-right    |
 | M-=      | split-window-below    |
+| M-k      | delete-window         |
+| M-m      | delete-other-windows  |
