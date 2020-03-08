@@ -19,7 +19,7 @@
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Commentary:
-;; 
+;;
 
 ;;; Code:
 (defvar askeys/current-mode "command" "Current mode of askeys.")
@@ -41,7 +41,11 @@ With argument, do this that many times."
 With argument, do this that many times."
   (interactive)
   (delete-word (- arg)))
-
+(defun delete-whole-line ()
+  (interactive)
+  (move-beginning-of-line)
+  (kill-line)
+  )
 (defun remove-from-mode-line ()
   "Update modeline."
   (delete askeys/current-mode mode-line-misc-info)
@@ -105,7 +109,7 @@ With argument, do this that many times."
   (define-key askeys-mode-map (kbd "n")  'yank)
   (define-key askeys-mode-map (kbd "o")  'forward-word)
   (define-key askeys-mode-map (kbd "p")  'forward-sexp)
-  (define-key askeys-mode-map (kbd "q")  'kill-line)
+  (define-key askeys-mode-map (kbd "q")  'delete-whole-line)
   (define-key askeys-mode-map (kbd "r")  'askeys/--command-mode-is-enabled-callback)
   (define-key askeys-mode-map (kbd "s")  'delete-word-backward)
   (define-key askeys-mode-map (kbd "t")  'toggle-color-mode)
@@ -128,8 +132,7 @@ With argument, do this that many times."
   (define-key askeys-mode-map (kbd "'")  'askeys/--command-mode-is-enabled-callback)
   (define-key askeys-mode-map (kbd "\"")  'askeys/--command-mode-is-enabled-callback)
   (define-key askeys-mode-map (kbd ";")  'comment-line)
-  (define-key askeys-mode-map (kbd "SPC") 'askeys/insert-mode-enable)
-  (message "command mode enabled"))
+  (define-key askeys-mode-map (kbd "SPC") 'askeys/insert-mode-enable))
 ;; (mode-line-misc-info)
  (defun askeys/insert-mode-enable ()
   "Add insert mode keys (basically Emacs) but with a way to get to command mode."
@@ -137,7 +140,6 @@ With argument, do this that many times."
   (remove-from-mode-line)
   (setq askeys/current-mode "insert")
   (add-to-mode-line)
-  (message "insert mode enabled")
   (define-key askeys-mode-map (kbd "~")  nil)
   (define-key askeys-mode-map (kbd "!")  nil)
   (define-key askeys-mode-map (kbd "@")  nil)
@@ -210,6 +212,8 @@ With argument, do this that many times."
   "Turn on askeys."
   (interactive)
   (askeys-mode t)
+  (add-hook 'minibuffer-setup-hook 'askeys/insert-mode-enable)
+  (add-hook 'minibuffer-exit-hook 'askeys/command-mode-enable)
   (askeys/command-mode-enable)
   )
 
@@ -221,8 +225,9 @@ With argument, do this that many times."
 
 
 (define-minor-mode askeys-mode "amirrezaask modal keybindings for Emacs")
+(define-globalized-minor-mode global-askeys-mode askeys-mode askeys/turn-on)
 
-(global-set-key (kbd "C-x a k ") 'askeys/turn-on)
+;; (global-set-key (kbd "C-x a k ") 'askeys/turn-on)
 
 (provide 'askeys.el)
 ;;; askeys.el ends here
