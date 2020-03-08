@@ -1,3 +1,13 @@
 * askeys.el
-my personal modal editing for emacs
+Askeys is based on the idea of seperating movement from actions. So in askeys all movement happens with
+Ctrl and all actions happens with Meta (Alt) key.
+* Keybindings
+*** Movements
+| Keychord | Movement |
+|----------+----------|
+|          |          |
 
+*** Actions
+| Keychord | action |
+|----------+--------|
+|          |        |

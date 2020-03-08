@@ -91,7 +91,7 @@ With argument, do this that many times."
 (define-minor-mode askeys-mode "amirrezaask modal keybindings for Emacs")
 (define-globalized-minor-mode global-askeys-mode askeys-mode askeys/turn-on)
 
-;; (global-set-key (kbd "C-x a k ") 'askeys/turn-on)
+
 
 (provide 'askeys.el)
 ;;; askeys.el ends here
