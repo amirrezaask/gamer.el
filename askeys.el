@@ -76,9 +76,9 @@ With argument, do this that many times."
 	(define-key map (kbd "M-u") 'undo)
         (define-key map (kbd "C->") 'next-buffer)
 	(define-key map (kbd "C-<") 'previous-buffer)
-	(define-key map (kbd "C-W") 'other-window)
-	(define-key map (kbd "M-X") 'split-window-right)
-	(define-key map (kbd "M-Z") 'split-window-below)
+	(define-key map (kbd "C-o") 'other-window)
+	(define-key map (kbd "M-'") 'split-window-right)
+	(define-key map (kbd "M-=") 'split-window-below)
 	map)
      "Amirreza Keybindings.")
 (defun askeys/turn-on ()
@@ -94,8 +94,5 @@ With argument, do this that many times."
 
 (define-minor-mode askeys-mode "amirrezaask modal keybindings for Emacs")
 (define-globalized-minor-mode global-askeys-mode askeys-mode askeys/turn-on)
-
-
-
 (provide 'askeys.el)
 ;;; askeys.el ends here
