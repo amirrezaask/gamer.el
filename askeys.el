@@ -44,7 +44,6 @@ With argument, do this that many times."
 
 (defun askeys/--newline-and-comment () "Add a new line to the first of the line and comments that line."
        (call-interactively 'move-beginning-of-line) (insert "\n") (forward-line -1) (call-interactively 'comment-line))
-
 (defvar askeys-mode-map
   (let ((map (make-sparse-keymap)))
         (define-key input-decode-map (kbd "C-i") (kbd "H-i"))
@@ -73,14 +72,13 @@ With argument, do this that many times."
 	(define-key map (kbd "M-t") 'toggle-color-mode)
 	(define-key map (kbd "M-k") 'ido-kill-buffer)
 	(define-key map (kbd "M-l k") 'delete-whole-line)
-        (define-key map (kbd "M-f") 'helm-find-files)
+  (define-key map (kbd "M-f") 'helm-find-files)
 	(define-key map (kbd "M-u") 'undo)
-        (define-key map (kbd "C->") 'next-buffer)
 	(define-key map (kbd "C-<") 'previous-buffer)
 	(define-key map (kbd "C-o") 'other-window)
 	(define-key map (kbd "M-'") 'split-window-right)
 	(define-key map (kbd "M-=") 'split-window-below)
-        (define-key map (kbd "M-d") 'delete-window)
+  (define-key map (kbd "M-d") 'delete-window)
 	(define-key map (kbd "M-m") 'delete-other-windows)
 	map)
      "Amirreza Keybindings.")
