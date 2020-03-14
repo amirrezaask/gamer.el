@@ -22,7 +22,6 @@
 ;;
 
 ;;; Code:
-
 (defun delete-word (arg)
   "Delete characters forward until encountering the end of a word.
 With argument, do this that many times."
@@ -58,12 +57,17 @@ With argument, do this that many times."
 	(define-key map (kbd "M-a") 'backward-word)
 	(define-key map (kbd "M-w") 'backward-sentence)
 	(define-key map (kbd "M-s") 'forward-sentence)
-	(define-key map (kbd "C-M-s") 'forward-sexp)
-	(define-key map (kbd "C-M-w") 'backward-sexp)
-	(define-key map (kbd "M-v") 'next-buffer)
-	(define-key map (kbd "M-c") 'previous-buffer)
-	(define-key map (kbd "C-z") 'other-window)
-	(define-key map (kbd "C-M-z") 'delete-other-windows)
+	(define-key map (kbd "C-M-d") 'forward-sexp)
+	(define-key map (kbd "C-M-a") 'backward-sexp)
+	(define-key map (kbd "C-M-w") 'scroll-down-command)
+	(define-key map (kbd "C-M-s") 'scroll-up-command)
+	(define-key map (kbd "M-e") 'execute-extended-command)
+	(define-key map (kbd "M-x") 'next-buffer)
+	(define-key map (kbd "M-z") 'previous-buffer)
+	(define-key map (kbd "C-`") 'other-window)
+	(define-key map (kbd "C-1") 'delete-other-windows)
+	(define-key map (kbd "C-2") 'split-window-horizontally)
+	(define-key map (kbd "C-3") 'split-window-vertically)
 	(define-key map (kbd "C-,") 'kill-ring-save)
 	(define-key map (kbd "C-.") 'yank)
 	(define-key map (kbd "C-;") 'kill-region)
