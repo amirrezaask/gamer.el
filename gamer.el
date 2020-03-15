@@ -1,4 +1,4 @@
-;;; askeys.el --- Personal Emacs keybindings -*- lexical-binding: t; -*-
+;;; gamer.el --- Game like keybindings for Emacs -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2020  Amirreza Askarpour
 
@@ -31,7 +31,7 @@ With argument, do this that many times."
     (delete-region (point) (progn (forward-word arg) (point)))))
 
 (defun delete-word-backward (arg)
-  "Delete characters backward until encountering the end of a word.
+  "Delete charactsers backward until encountering the end of a word.
 With argument, do this that many times."
   (interactive)
   (delete-word (- arg)))
@@ -41,10 +41,10 @@ With argument, do this that many times."
   (move-beginning-of-line 1)
   (kill-line))
 
-(defun askeys/--newline-and-comment () "Add a new line to the first of the line and comments that line."
+(defun gamer/--newline-and-comment () "Add a new line to the first of the line and comments that line."
        (call-interactively 'move-beginning-of-line) (insert "\n") (forward-line -1) (call-interactively 'comment-line))
 
-(defvar askeys-mode-map
+(defvar gamer-mode-map
   (let ((map (make-sparse-keymap)))
         (define-key input-decode-map (kbd "C-i") (kbd "H-i"))
 	(define-key map (kbd "C-q") 'move-beginning-of-line)
@@ -79,19 +79,19 @@ With argument, do this that many times."
 	(define-key map (kbd "M-j") 'delete-word-backward)
 	(define-key map (kbd "C-M-j") 'kill-sentence)
 	map)
-     "Amirreza Keybindings.")
-(defun askeys/turn-on ()
-  "Turn on askeys."
+     "Gamer Keybindings.")
+(defun gamer/turn-on ()
+  "Turn on Gamer."
   (interactive)
-  (askeys-mode t))
+  (gamer-mode t))
 
-(defun askeys/turn-off ()
-  "Turn off askeys."
+(defun gamer/turn-off ()
+  "Turn off Gamer."
   (interactive)
-  (askeys-mode nil))
+  (gamer-mode nil))
 
 
-(define-minor-mode askeys-mode "amirrezaask modal keybindings for Emacs")
-(define-globalized-minor-mode global-askeys-mode askeys-mode askeys/turn-on)
-(provide 'askeys.el)
-;;; askeys.el ends here
+(define-minor-mode gamer-mode "Gamer keybindings for Emacs")
+(define-globalized-minor-mode global-gamer-mode gamer-mode gamer/turn-on)
+(provide 'gamer.el)
+;;; gamer.el ends here
